@@ -9,38 +9,36 @@ import java.util.Arrays;
 
 public class Main {
     private final PrismSet prismSet = new PrismSet();
-    private final Prism firstPrism = new Prism(2,2,2);
+    //private final Prism firstPrism = new Prism(2,2,2);
     private Main() {
         setPrismSet();
-//        buildMenorah(PrismDirection.BOTTOM);
         Arrays.stream(PrismDirection.values())
                 .forEach(this::buildMenorah);
     }
 
     private void buildMenorah(PrismDirection direction) {
         Menorah menorah = new Menorah(direction);
-        menorah.addRight(firstPrism.getSides().get(0));
         tryBuild(menorah);
     }
     private void tryBuild(Menorah menorah) {
-        System.out.println(menorah.size());
+        //System.out.println(menorah.size());
         if (menorah.size() >= 8) {
             System.out.println(menorah.toString());
         }
-        prismSet.fittingSides(menorah.rightSide()).forEach(
-                newSide -> {
-                    if (!menorah.contains(newSide.getPrism())) {
-                        menorah.addRight(newSide);
-                        tryBuild(menorah);
-                        menorah.removeRight();
-                    }
-                }
+        (menorah.size()==0 ? prismSet.getAllSides() : prismSet.fittingSides(menorah.rightSide()))
+                .forEach(
+                        newSide -> {
+                            if (!menorah.contains(newSide.getPrism())) {
+                                menorah.addRight(newSide);
+                                tryBuild(menorah);
+                                menorah.removeRight();
+                            }
+                        }
         );
-
     }
 
     private void setPrismSet() {
-        prismSet.add(firstPrism);
+        prismSet.add(new Prism(2,2,2));
         prismSet.add(new Prism(1,1,2));
         prismSet.add(new Prism(2,2,1));
         prismSet.add(new Prism(1,1,3));
