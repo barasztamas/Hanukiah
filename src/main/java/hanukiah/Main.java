@@ -6,14 +6,20 @@ import hanukiah.prism.Prism;
 import hanukiah.prismset.PrismSet;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
     private final PrismSet prismSet = new PrismSet();
     //private final Prism firstPrism = new Prism(2,2,2);
+    private Set<Menorah> menorahs = new HashSet<>();
+
+
     private Main() {
         setPrismSet();
         Arrays.stream(PrismDirection.values())
                 .forEach(this::buildMenorah);
+        menorahs.forEach(System.out::println);
     }
 
     private void buildMenorah(PrismDirection direction) {
@@ -22,10 +28,10 @@ public class Main {
     }
     private void tryBuild(Menorah menorah) {
         //System.out.println(menorah.size());
-        if (menorah.size() >= 8) {
-            System.out.println(menorah.toString());
+        if (menorah.size() >= 8 & !menorahs.contains(menorah)) {
+            menorahs.add(menorah.copy());
         }
-        (menorah.size()==0 ? prismSet.getAllSides() : prismSet.fittingSides(menorah.rightSide()))
+        prismSet.fittingSides(menorah.rightSide())
                 .forEach(
                         newSide -> {
                             if (!menorah.contains(newSide.getPrism())) {
