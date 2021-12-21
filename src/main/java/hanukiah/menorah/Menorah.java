@@ -28,7 +28,7 @@ public class Menorah {
     private Prism.Side rightSide(int i) {
         Prism.Side leftSide = leftSides.get(i);
         List<Prism.Side> sides = leftSide.getPrism().getSides();
-        return sides.get(sides.indexOf(leftSide)+ direction(i).rightOffset % Prism.PRISM_SIZE);
+        return sides.get(Math.floorMod (sides.indexOf(leftSide)+ direction(i).rightOffset, Prism.PRISM_SIZE));
     }
     public Prism.Side rightSide() {
         return size() == 0 ? null : rightSide(size() - 1);
