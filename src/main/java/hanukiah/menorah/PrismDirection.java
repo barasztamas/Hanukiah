@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum PrismDirection {
-    TOP(-1),
-    BOTTOM(1),
+    UP(-1),
+    DOWN(1),
     ;
     public final int rightOffset;
 

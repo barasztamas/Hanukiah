@@ -22,16 +22,16 @@ public class Menorah {
         return leftSides.stream().map(Prism.Side::getPrism).anyMatch(prism::equals);
     }
     public Prism removeRight() {
-        return leftSides.remove(leftSides.size()-1).getPrism();
+        return leftSides.remove(size()-1).getPrism();
     }
 
     private Prism.Side rightSide(int i) {
         Prism.Side leftSide = leftSides.get(i);
         List<Prism.Side> sides = leftSide.getPrism().getSides();
-        return sides.get(Math.floorMod (sides.indexOf(leftSide)+ direction(i).rightOffset, Prism.PRISM_SIZE));
+        return sides.get(sides.indexOf(leftSide)+ direction(i).rightOffset % Prism.PRISM_SIZE);
     }
     public Prism.Side rightSide() {
-        return this.size() == 0 ? null : rightSide(leftSides.size() - 1);
+        return size() == 0 ? null : rightSide(size() - 1);
     }
 
     private PrismDirection direction(int i) {
@@ -50,13 +50,6 @@ public class Menorah {
         if (!(obj instanceof Menorah)) {
             return false;
         }
-
-        BiFunction<Prism.Side, Prism.Side, Boolean> areEqual = (side1, side2) ->
-                side1.getCorners(0) == side2.getCorners(0)
-                        && side1.getCorners(1) == side2.getCorners(1);
-        BiFunction<Prism.Side, Prism.Side, Boolean> areMirrored = (side1, side2) ->
-                side1.getCorners(0) == side2.getCorners(1)
-                        && side1.getCorners(1) == side2.getCorners(0);
         Menorah other = (Menorah) obj;
 
         if (other.size() != this.size()) {
@@ -70,7 +63,7 @@ public class Menorah {
 
     @Override
     public int hashCode() {
-        return this.size();
+        return size();
     }
 
     @Override
@@ -83,9 +76,9 @@ public class Menorah {
     }
 
     private String prismToString(int i) {
-        if (direction(i) == PrismDirection.BOTTOM) {
+        if (direction(i) == PrismDirection.DOWN) {
             return leftSides.get(i).getCorners(0) + "," + leftSides.get(i).getCorners(1) + "," + rightSide(i).getCorners(1);
-        } else if (direction(i) == PrismDirection.TOP) {
+        } else if (direction(i) == PrismDirection.UP) {
             return leftSides.get(i).getCorners(1) + "," + leftSides.get(i).getCorners(0) + "," + rightSide(i).getCorners(0);
         } else {
             throw new IllegalStateException();
