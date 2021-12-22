@@ -1,6 +1,5 @@
 package hanukiah.menorah;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

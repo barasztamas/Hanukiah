@@ -12,7 +12,7 @@ import java.util.Set;
 public class Main {
     private final PrismSet prismSet = new PrismSet();
     //private final Prism firstPrism = new Prism(2,2,2);
-    private Set<Menorah> menorahs = new HashSet<>();
+    private final Set<Menorah> menorahs = new HashSet<>();
 
 
     private Main() {

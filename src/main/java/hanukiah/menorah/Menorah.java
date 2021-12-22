@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -13,23 +12,28 @@ import java.util.stream.IntStream;
 public class Menorah {
     private final PrismDirection firstDirection;
     private List<Prism.Side> leftSides = new ArrayList<>(9);
-    public boolean addRight(Prism.Side leftSide) {
-        if (contains(leftSide.getPrism())) { return false; }
+
+    public void addRight(Prism.Side leftSide) {
+        if (contains(leftSide.getPrism())) {
+            return;
+        }
         leftSides.add(leftSide);
-        return true;
     }
+
     public boolean contains(Prism prism) {
         return leftSides.stream().map(Prism.Side::getPrism).anyMatch(prism::equals);
     }
-    public Prism removeRight() {
-        return leftSides.remove(size()-1).getPrism();
+
+    public void removeRight() {
+        leftSides.remove(size() - 1).getPrism();
     }
 
     private Prism.Side rightSide(int i) {
         Prism.Side leftSide = leftSides.get(i);
         List<Prism.Side> sides = leftSide.getPrism().getSides();
-        return sides.get(Math.floorMod (sides.indexOf(leftSide)+ direction(i).rightOffset, Prism.PRISM_SIZE));
+        return sides.get(Math.floorMod(sides.indexOf(leftSide) + direction(i).rightOffset, Prism.PRISM_SIZE));
     }
+
     public Prism.Side rightSide() {
         return size() == 0 ? null : rightSide(size() - 1);
     }
@@ -58,7 +62,7 @@ public class Menorah {
         return other.toString().equals(this.toString())
                 || (
                 Math.abs(other.firstDirection.ordinal() - this.firstDirection.ordinal()) == size() % 2
-                        && new StringBuilder(other.prismsToString()).reverse().toString().equals(this.prismsToString())); //works for cyclycally symmetric menorahs, if Corner size in [0,9]
+                        && new StringBuilder(other.prismsToString()).reverse().toString().equals(this.prismsToString())); //works for cyclically symmetric menorahs, if Corner size in [0,9]
     }
 
     @Override
