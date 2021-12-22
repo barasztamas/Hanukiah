@@ -62,7 +62,7 @@ public class Menorah {
         return other.toString().equals(this.toString())
                 || (
                 Math.abs(other.firstDirection.ordinal() - this.firstDirection.ordinal()) == size() % 2
-                        && new StringBuilder(other.prismsToString()).reverse().toString().equals(this.prismsToString())); //works for cyclically symmetric menorahs, if Corner size in [0,9]
+                        && new StringBuilder(other.prismsToString()).reverse().toString().equals(this.prismsToString())); //works for cyclically symmetric menorahs
     }
 
     @Override
